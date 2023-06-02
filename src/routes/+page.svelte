@@ -144,21 +144,15 @@
 <div class="container wrapper" id="slide-2">
   <div class="left-content">
     <div class="center-piece">
-      <h1>Page 2</h1>
-      <h2>The creators of your future watch!</h2>
-      <p>
-        Check out our latest product <a href="https://link.dev">link</a> to read
-        the documentation
+      <h1>Play Snake</h1>
+      <h2>Yep this presentation software breaks the limits of powerpoint.</h2>
+      <p style="width: 75%;">
+        You can literally display any feature 🏗️html / 🎨css / ⚙️js can display. Does not matter if you wanna play a 🐍game, display a 🎬video, load an 🖼️image or break the whole page🗑️. You can do everything. 🧊
       </p>
     </div>
   </div>
   <div class="right-content">
-    <img
-      on:click={toggleNav}
-      class="header-img"
-      src="front.png"
-      alt="watches front side"
-    />
+    <iframe class="header-img" title="snake" src="https://snake.googlemaps.com/" height="75%" style="aspect-ratio: 1/1;" frameborder="0"></iframe>
   </div>
   <div class="slideNumber">
     <span>2</span>
