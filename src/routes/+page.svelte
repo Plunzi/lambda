@@ -1,14 +1,17 @@
 <script>
+  let slide = 1;
+
   function toggleNav() {
     const primaryNav = document.getElementById("primary-navigation");
     const primaryFoo = document.getElementById("primary-footer");
     const page = document.getElementById("page");
     if (primaryNav?.classList.contains("hide")) {
+      // @ts-ignore
       primaryFoo.style.display = "block";
       setTimeout(() => {
         primaryNav?.classList.remove("hide");
-      primaryFoo?.classList.remove("hide");
-      page?.classList.remove("focus");
+        primaryFoo?.classList.remove("hide");
+        page?.classList.remove("focus");
       }, 5);
     } else {
       primaryNav?.classList.add("hide");
@@ -20,12 +23,84 @@
       }, 500);
     }
   }
+
+  function nextSlide() {
+    const primaryNav = document.getElementById("primary-navigation");
+    if (!primaryNav?.classList.contains("hide")) {
+      toggleNav();
+      setTimeout(() => {
+        const curSlide = "slide-" + slide;
+        // @ts-ignore
+        document.getElementById(curSlide).style.transform = "translateX(-100%)";
+        slide = slide + 1;
+        const newSlide = "slide-" + slide;
+        // @ts-ignore
+        document.getElementById(newSlide).style.transform = "translateX(0%)";
+      }, 1000);
+    } else {
+      const curSlide = "slide-" + slide;
+      // @ts-ignore
+      document.getElementById(curSlide).style.transform = "translateX(-100%)";
+      slide = slide + 1;
+      const newSlide = "slide-" + slide;
+      // @ts-ignore
+      document.getElementById(newSlide).style.transform = "translateX(0%)";
+    }
+  }
+
+  // @ts-ignore
+  function prevSlide() {
+    const curSlide = "slide-" + slide;
+    // @ts-ignore
+    document.getElementById(curSlide).style.transform = "translateX(100%)";
+    slide = slide - 1;
+
+    const prevSlide = "slide-" + slide;
+    // @ts-ignore
+    document.getElementById(prevSlide).style.transform = "translateX(0%)";
+  }
+
+  // @ts-ignore
+  function onKeyDown(e) {
+    switch (e.key) {
+      case "ArrowRight":
+        nextSlide();
+        break;
+      case "ArrowLeft":
+        prevSlide();
+      default:
+        break;
+    }
+  }
 </script>
 
-<div class="container wrapper">
+<div class="container wrapper" id="slide-1">
   <div class="left-content">
     <div class="center-piece">
       <h1>Lambda Watches</h1>
+      <h2>The creators of your future watch!</h2>
+      <p>
+        Check out our latest product <a href="https://link.dev">link</a> to read
+        the documentation
+      </p>
+    </div>
+  </div>
+  <div class="right-content">
+    <img
+      on:click={toggleNav}
+      class="header-img"
+      src="front.png"
+      alt="watches front side"
+    />
+  </div>
+</div>
+
+<svelte:window on:keydown={onKeyDown} />
+
+<div class="container wrapper" id="slide-2">
+  <div class="left-content">
+    <div class="center-piece">
+      <h1>Page 2</h1>
       <h2>The creators of your future watch!</h2>
       <p>
         Check out our latest product <a href="https://link.dev">link</a> to read
@@ -49,6 +124,15 @@
     display: flex;
     gap: 1rem;
     flex-grow: 1;
+    transition: ease 2s;
+  }
+
+  #slide-2 {
+    position: fixed;
+    width: calc(100vw - 2rem);
+    height: calc(100vh - 2rem);
+    height: calc(100svh - 2rem);
+    transform: translateX(100%);
   }
 
   .wrapper {

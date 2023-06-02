@@ -35,7 +35,12 @@
     color: #535bf2;
   }
 
+  :global(body) {
+    overflow: auto;
+  }
+
   #page {
+    width: 100%;
     padding-top: 5.5rem;
     flex-grow: 1;
     display: flex;
@@ -45,7 +50,7 @@
 
   :global(#page.focus) {
     padding: 0;
-    height: calc(100vh-2rem);
+    height: calc(100vh - 2rem);
   }
 
   :global(body) {
