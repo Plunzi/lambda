@@ -134,6 +134,9 @@
       alt="watches front side"
     />
   </div>
+  <div class="slideNumber">
+    <span>1</span>
+  </div>
 </div>
 
 <svelte:window on:keydown={onKeyDown} />
@@ -157,15 +160,36 @@
       alt="watches front side"
     />
   </div>
+  <div class="slideNumber">
+    <span>2</span>
+  </div>
 </div>
 
 <style lang="less">
   .container {
+    position: relative;
     padding: 1rem;
     display: flex;
     gap: 1rem;
     flex-grow: 1;
     transition: ease 2s;
+  }
+
+  .slideNumber {
+    position: absolute;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    background: #00000020;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 1rem;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    & span {
+      transform: translateY(.1rem);
+    }
   }
 
   #slide-2 {
