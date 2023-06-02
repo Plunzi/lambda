@@ -1,5 +1,11 @@
 <script>
+  const slideOptions = {
+    minSlides: "1",
+    maxSlides: "2",
+  };
+
   let slide = 1;
+  let curMinSlide;
 
   function toggleNav() {
     const primaryNav = document.getElementById("primary-navigation");
@@ -24,11 +30,44 @@
     }
   }
 
+  function escapeSlide() {
+    const primaryNav = document.getElementById("primary-navigation");
+    const primaryFoo = document.getElementById("primary-footer");
+    const page = document.getElementById("page");
+    // @ts-ignore
+    primaryFoo.style.display = "block";
+    setTimeout(() => {
+      primaryNav?.classList.remove("hide");
+      primaryFoo?.classList.remove("hide");
+      page?.classList.remove("focus");
+    }, 5);
+
+    const curSlide = "slide-" + slide;
+    // @ts-ignore
+    document.getElementById(curSlide).style.height = "calc(100vh - 12rem)";
+    curMinSlide = slide;
+  }
+
   function nextSlide() {
     const primaryNav = document.getElementById("primary-navigation");
-    if (!primaryNav?.classList.contains("hide")) {
-      toggleNav();
-      setTimeout(() => {
+    // @ts-ignore
+    if (curMinSlide != undefined) {
+    }
+
+    if (Number(slideOptions.maxSlides) > slide) {
+      if (!primaryNav?.classList.contains("hide")) {
+        toggleNav();
+        setTimeout(() => {
+          const curSlide = "slide-" + slide;
+          // @ts-ignore
+          document.getElementById(curSlide).style.transform =
+            "translateX(-100%)";
+          slide = slide + 1;
+          const newSlide = "slide-" + slide;
+          // @ts-ignore
+          document.getElementById(newSlide).style.transform = "translateX(0%)";
+        }, 1000);
+      } else {
         const curSlide = "slide-" + slide;
         // @ts-ignore
         document.getElementById(curSlide).style.transform = "translateX(-100%)";
@@ -36,38 +75,40 @@
         const newSlide = "slide-" + slide;
         // @ts-ignore
         document.getElementById(newSlide).style.transform = "translateX(0%)";
-      }, 1000);
-    } else {
-      const curSlide = "slide-" + slide;
-      // @ts-ignore
-      document.getElementById(curSlide).style.transform = "translateX(-100%)";
-      slide = slide + 1;
-      const newSlide = "slide-" + slide;
-      // @ts-ignore
-      document.getElementById(newSlide).style.transform = "translateX(0%)";
+      }
     }
   }
 
   // @ts-ignore
   function prevSlide() {
-    const curSlide = "slide-" + slide;
-    // @ts-ignore
-    document.getElementById(curSlide).style.transform = "translateX(100%)";
-    slide = slide - 1;
+    if (Number(slideOptions.minSlides) < slide) {
+      const curSlide = "slide-" + slide;
+      // @ts-ignore
+      document.getElementById(curSlide).style.transform = "translateX(100%)";
+      slide = slide - 1;
 
-    const prevSlide = "slide-" + slide;
-    // @ts-ignore
-    document.getElementById(prevSlide).style.transform = "translateX(0%)";
+      const prevSlide = "slide-" + slide;
+      // @ts-ignore
+      document.getElementById(prevSlide).style.transform = "translateX(0%)";
+    }
   }
 
   // @ts-ignore
   function onKeyDown(e) {
+    console.log(e.key);
     switch (e.key) {
       case "ArrowRight":
         nextSlide();
         break;
       case "ArrowLeft":
         prevSlide();
+        break;
+      case " ":
+        nextSlide();
+        break;
+      case "Escape":
+        escapeSlide();
+        break;
       default:
         break;
     }
