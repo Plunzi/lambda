@@ -1,7 +1,9 @@
 <script>
-  const slideOptions = {
+  import { onMount } from "svelte";
+
+  let slideOptions = {
     minSlides: "1",
-    maxSlides: "2",
+    maxSlides: "",
   };
 
   let slide = 1;
@@ -113,6 +115,14 @@
         break;
     }
   }
+
+  onMount(async () => {
+    slideOptions = {
+      minSlides: "1",
+      maxSlides: String(document.getElementsByClassName("wrapper").length),
+    };
+    console.log(slideOptions.maxSlides);
+  });
 </script>
 
 <div class="container wrapper" id="slide-1">
@@ -147,12 +157,21 @@
       <h1>Play Snake</h1>
       <h2>Yep this presentation software breaks the limits of powerpoint.</h2>
       <p style="width: 75%;">
-        You can literally display any feature 🏗️html / 🎨css / ⚙️js can display. Does not matter if you wanna play a 🐍game, display a 🎬video, load an 🖼️image or break the whole page🗑️. You can do everything. 🧊
+        You can literally display any feature 🏗️html / 🎨css / ⚙️js can display.
+        Does not matter if you wanna play a 🐍game, display a 🎬video, load an
+        🖼️image or break the whole page🗑️. You can do anything. 🧊
       </p>
     </div>
   </div>
   <div class="right-content">
-    <iframe class="header-img" title="snake" src="https://snake.googlemaps.com/" height="75%" style="aspect-ratio: 1/1;" frameborder="0"></iframe>
+    <iframe
+      class="header-img"
+      title="snake"
+      src="https://snake.googlemaps.com/"
+      height="75%"
+      style="aspect-ratio: 1/1;"
+      frameborder="0"
+    />
   </div>
   <div class="slideNumber">
     <span>2</span>
@@ -160,6 +179,11 @@
 </div>
 
 <style lang="less">
+  #slide-1 .left-content .center-piece, #slide-2 .left-content .center-piece {
+    padding-left: 4rem;
+  }
+
+
   .container {
     position: relative;
     padding: 1rem;
@@ -170,6 +194,7 @@
   }
 
   .slideNumber {
+    color: black;
     position: absolute;
     right: 1.5rem;
     bottom: 1.5rem;
@@ -182,7 +207,7 @@
     align-items: center;
     font-size: 1.5rem;
     & span {
-      transform: translateY(.1rem);
+      transform: translateY(0.1rem);
     }
   }
 
@@ -197,12 +222,8 @@
   .wrapper {
     background: linear-gradient(
       45deg,
-      #f17c58,
-      #e94584,
-      #24aadb,
-      #27dbb1,
-      #ffdc18,
-      #ff3706
+      #ffffff,
+      #ffffff
     );
     background-size: 600% 100%;
     animation: gradient 16s linear infinite;
@@ -217,23 +238,31 @@
     }
   }
 
-  h1 {
+  .wrapper h1 {
     padding: 0;
     margin: 0;
     background: #f2994a; /* fallback for old browsers */
     background: -webkit-linear-gradient(
       to right,
-      #f2c94c,
-      #f2994a
+      #000000,
+      #333333
     ); /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(
       to right,
-      #f2c94c,
-      #f2994a
+      #000000,
+      #333333
     ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+  }
+
+  .wrapper h2 {
+    color: #212121;
+  }
+
+  .wrapper p {
+    color: #212121;
   }
 
   .left-content {
