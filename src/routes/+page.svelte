@@ -1,6 +1,38 @@
 <script>
   import { onMount } from "svelte";
 
+  let characters = ["🥳", "🎉", "✨"];
+
+  let confetti = new Array(100)
+    .fill()
+    .map((_, i) => {
+      return {
+        character: characters[i % characters.length],
+        x: Math.random() * 100,
+        y: -20 - Math.random() * 100,
+        r: 0.1 + Math.random() * 1,
+      };
+    })
+    .sort((a, b) => a.r - b.r);
+
+  onMount(() => {
+    let frame;
+
+    function loop() {
+      frame = requestAnimationFrame(loop);
+
+      confetti = confetti.map((emoji) => {
+        emoji.y += 0.7 * emoji.r;
+        if (emoji.y > 120) emoji.y = -20;
+        return emoji;
+      });
+    }
+
+    loop();
+
+    return () => cancelAnimationFrame(frame);
+  });
+
   let slideOptions = {
     minSlides: "1",
     maxSlides: "",
@@ -160,6 +192,7 @@
       <h1>Projektziel</h1>
       <h2>Was wurde umgesetzt?</h2>
       <ul>
+        <li>Logo</li>
         <li>Website</li>
         <li>Styleguide</li>
         <li>3d Render der Uhr</li>
@@ -465,19 +498,33 @@
     <div class="center-piece">
       <h1>Resümee</h1>
       <h2>Was lief gut.</h2>
-      <h2>Kommunikation :</h2>
-      <p style="width: 75%;" />
+      <h2>1. Klar definierte Ziele :</h2>
+      <p style="width: 75%;">
+        Wenn alle Teammitglieder verstehen, was erreicht werden soll, können sie
+        effektiver zusammenarbeiten und ihre Aufgaben entsprechend planen.
+      </p>
+      <h2>2. Teamarbeit und Zusammenarbeit :</h2>
+      <p style="width: 75%;">
+        Wenn die Teammitglieder respektvoll miteinander umgehen, ihr Wissen und
+        ihre Fähigkeiten teilen und sich gegenseitig unterstützen, kann das
+        Projekt reibungslos voranschreiten.
+      </p>
+      <h2>3. Kontinuierliche Überprüfung und Anpassung :</h2>
+      <p style="width: 75%;">
+        Indem das Team flexibel bleibt und auf Veränderungen reagiert, können
+        mögliche Probleme rechtzeitig erkannt und gelöst werden.
+      </p>
     </div>
   </div>
   <div class="right-content">
     <div>
       <h2>Was lief nicht so gut.</h2>
-      <h2>Kommunikation :</h2>
+      <h2>1. Kommunikation :</h2>
       <p style="width: 75%;">
         Benötigte Inhalte wurden erst spät an das Team weitergegeben und
         beeinträchtigten den Fortschritt massiv.
       </p>
-      <h3>Zeitplanung :</h3>
+      <h3>2. Zeitplanung :</h3>
       <p style="width: 75%;">
         Am Schluss fehlte die Motivation und Schlussende hat den Fokus auf
         andere Dinge erhöht. Dadurch wurde der Fortschritt verlangsamt.
@@ -489,9 +536,68 @@
   </div>
 </div>
 
+<div class="container wrapper" id="slide-5">
+  <div class="left-content">
+    <div class="center-piece">
+      <h1>Lessons learned</h1>
+      <h2 style="margin-top: 2rem;">Kommunikation :</h2>
+      <p style="width: 50%;">
+        Eine aktive und produktive Kommunikation ist von entscheidender
+        Bedeutung, um in einem Projekt voranzukommen. Durch eine effektive
+        Zusammenarbeit und den Austausch von Ideen und Informationen können
+        Hindernisse überwunden und erfolgreiche Lösungen gefunden werden.
+      </p>
+      <h2>Weiterleitung :</h2>
+      <p style="width: 50%;">
+        Um in einem Projekt voranzukommen, ist es entscheidend, erforderliche
+        Inhalte rechtzeitig mit anderen zu teilen. Eine zeitgerechte Weitergabe
+        von Informationen gewährleistet eine effiziente Zusammenarbeit und
+        ermöglicht es allen Teammitgliedern, ihre Aufgaben termingerecht zu
+        erledigen.
+      </p>
+      <h2>Zeitplanung</h2>
+      <p style="width: 50%;">
+        Eine bessere Zeitpufferplanung ist wichtig, insbesondere wenn die
+        Motivation nachlässt. In einem Projekt kann es Momente geben, in denen
+        die Teammitglieder aufgrund verschiedener Faktoren wie Ermüdung, Stress
+        oder fehlender Inspiration ihre Motivation verlieren.
+      </p>
+    </div>
+  </div>
+  <div class="slideNumber">
+    <span>5</span>
+  </div>
+</div>
+
+<div class="container wrapper" id="slide-6">
+  <div class="left-content" style="justify-content: center; overflow: hidden;">
+    {#each confetti as c}
+      <span
+        class="emoji-spam"
+        style="left: {c.x}%; top: {c.y}%; transform: scale({c.r})"
+        >{c.character}</span
+      >
+    {/each}
+    <h1 style="z-index: 10;">Danke für eure Aufmerksamkeit</h1>
+  </div>
+  <div class="slideNumber">
+    <span>6</span>
+  </div>
+</div>
+
 <style lang="less">
   .hours-spent {
     color: #4c4c4c;
+  }
+
+  #slide-6 .emoji-spam {
+    position: absolute;
+    font-size: 5vw;
+    user-select: none;
+  }
+
+  #slide-5 .center-piece {
+    padding-left: 4rem;
   }
 
   #slide-2 .right-content {
@@ -500,6 +606,11 @@
 
   #slide-2 .right-content div {
     margin-left: 4rem;
+  }
+
+  .wrapper p {
+    border-left: #000 solid 0.125rem;
+    padding-left: 0.5rem;
   }
 
   h3 {
@@ -626,7 +737,18 @@
   .wrapper h1 {
     padding: 0;
     margin: 0;
-    background: #f2994a; /* fallback for old browsers */
+    background: #f2994a;
+    background: -webkit-linear-gradient(
+      225deg,
+      #f37335,
+      #fdcd30
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+      225deg,
+      #f37335,
+      #fdcd30
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
     width: fit-content;
     padding: 1rem 1.5rem;
     border-radius: 1rem;
