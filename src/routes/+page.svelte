@@ -131,8 +131,7 @@
       <h1>Lambda Watches</h1>
       <h2>The creators of your future watch!</h2>
       <p>
-        Check out our latest product <a href="https://link.dev">link</a> to read
-        the documentation
+        We create high quality watches with focus on climate neutrality and pixel perfect <br> design for all our products. <a href="https://link.dev">Check out or products</a> and details.
       </p>
     </div>
   </div>

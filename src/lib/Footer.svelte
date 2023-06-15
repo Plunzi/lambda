@@ -11,6 +11,9 @@
       <img class="social" src="/social/Twitter.png" alt="" />
       <img class="social" src="/social/Behance.png" alt="" />
     </div>
+    <div style="margin-right: 1rem;">
+      © 2023 Lambda Watches Ltd
+    </div>
   </div>
 </footer>
 
@@ -27,6 +30,9 @@
 
   .footer {
     padding: .5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .share-section {
